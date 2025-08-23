@@ -1,12 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import App from "./App";
+import { configureStore } from '@reduxjs/toolkit';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
+const store = configureStore({
+  reducer: {
+    // Add your reducers here when needed
+  },
+});
 
+export default store;

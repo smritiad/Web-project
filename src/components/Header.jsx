@@ -1,10 +1,18 @@
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { IoLogoGameControllerB } from "react-icons/io";
 import { IoTimerOutline } from "react-icons/io5";
 import { FaHome, FaTasks } from "react-icons/fa";
 import { Link } from "react-router"; 
 import logo from "../assets/alarm.png";
 
+const navbarStyle = {
+  backgroundColor: '#0A5C4B',
+};
+
+const linkStyle = {
+  color: 'white',
+  textDecoration: 'none',
+};
 
 const Header = () => {
   return (
@@ -29,9 +37,6 @@ const Header = () => {
             <Nav.Link as={Link} to="/game" style={linkStyle}>
               <IoLogoGameControllerB /> Game
             </Nav.Link>
-            <Button style={toggleButtonStyle} onClick={() => dispatch(toggleTheme())}>
-              {theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode"}
-            </Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
