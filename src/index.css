@@ -1,0 +1,10 @@
+.product-title {
+  height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rating > span {
+  color: rgb(255, 170, 0);
+}
