@@ -10,6 +10,8 @@ import logo from "../assets/alarm.png";
 const Header = () => {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.isDark);
+  const tasks = useSelector((state) => state.tasks.tasks);
+  const hasTasks = tasks.length > 0;
 
   const navbarStyle = {
     backgroundColor: theme ? "#1a1a1a" : "#0A5C4B",
@@ -35,6 +37,17 @@ const Header = () => {
     cursor: "pointer",
     transition: "background-color 0.3s ease",
     zIndex: 10,
+  };
+
+  const redDotStyle = {
+    width: '8px',
+    height: '8px',
+    backgroundColor: '#ff4444',
+    borderRadius: '50%',
+    position: 'absolute',
+    top: '2px',
+    right: '2px',
+    border: '1px solid white',
   };
 
   return (
@@ -67,8 +80,9 @@ const Header = () => {
             <Nav.Link as={Link} to="/timer" style={linkStyle}>
               <IoTimerOutline /> Timer
             </Nav.Link>
-            <Nav.Link as={Link} to="/task" style={linkStyle}>
+            <Nav.Link as={Link} to="/task" style={{ ...linkStyle, position: 'relative' }}>
               <FaTasks /> Task
+              {hasTasks && <span style={redDotStyle}></span>}
             </Nav.Link>
             <Nav.Link as={Link} to="/game" style={linkStyle}>
               <IoLogoGameControllerB /> Game

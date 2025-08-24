@@ -23,7 +23,7 @@ const saveTasksToStorage = (tasks) => {
 const taskSlice = createSlice({
   name: 'tasks',
   initialState: {
-    tasks: loadTasksFromStorage(), // Load from localStorage on init
+    tasks: loadTasksFromStorage(),
     hasTasks: loadTasksFromStorage().length > 0,
   },
   reducers: {
@@ -36,19 +36,28 @@ const taskSlice = createSlice({
       };
       state.tasks.push(newTask);
       state.hasTasks = true;
-      saveTasksToStorage(state.tasks); // Save to localStorage
+      saveTasksToStorage(state.tasks);
     },
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter(task => task.id !== action.payload);
       state.hasTasks = state.tasks.length > 0;
-      saveTasksToStorage(state.tasks); // Save to localStorage
+      saveTasksToStorage(state.tasks);
     },
     toggleTask: (state, action) => {
       const task = state.tasks.find(task => task.id === action.payload);
       if (task) {
         task.completed = !task.completed;
       }
-      saveTasksToStorage(state.tasks); // Save to localStorage
+      saveTasksToStorage(state.tasks);
+    },
+    completeAndDeleteTask: (state, action) => {
+      const task = state.tasks.find(task => task.id === action.payload);
+      if (task) {
+        task.completed = true;
+      }
+      state.tasks = state.tasks.filter(task => task.id !== action.payload);
+      state.hasTasks = state.tasks.length > 0;
+      saveTasksToStorage(state.tasks);
     },
     setHasTasks: (state, action) => {
       state.hasTasks = action.payload;
@@ -56,5 +65,5 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addTask, removeTask, toggleTask, setHasTasks } = taskSlice.actions;
+export const { addTask, removeTask, toggleTask, completeAndDeleteTask, setHasTasks } = taskSlice.actions;
 export default taskSlice.reducer;
