@@ -15,6 +15,18 @@ function TasksPage() {
     maxWidth: "600px",
     width: "100%",
   };
+  const headingStyle = {
+    fontSize: "1.8rem",
+    fontWeight: "600",
+    color: "#0A5C4B",
+    letterSpacing: "0.5px",
+    textTransform: "uppercase",
+    fontFamily: "'Segoe UI', 'Roboto', sans-serif",
+    borderBottom: "2px solid #0A5C4B",
+    paddingBottom: "8px",
+    marginBottom: "20px",
+    textAlign: "center",
+  };
 
   return (
     <>
@@ -25,7 +37,7 @@ function TasksPage() {
       >
         <Card style={cardStyle}>
           <Card.Body>
-            <Card.Title>Tasks To Do</Card.Title>
+          <Card.Title style={headingStyle}>📝 Add a Task</Card.Title>
             <Card.Text className="mb-4"></Card.Text>
 
             {tasks.length > 0 ? (
@@ -41,13 +53,11 @@ function TasksPage() {
                     }}
                   >
                     {task.text}
-                  </li>
-                ))}
-              </ul>
+                  </li>))}</ul>
             ) : (
               <p className="text-muted text-center">
                 No tasks yet.{" "}
-                <Link to="/task" style={{ color: "#0A5C4B", fontWeight: "500" }}>
+                <Link to="/home" style={{ color: "#0A5C4B", fontWeight: "500" }}>
                   Add your first task!
                 </Link>
               </p>
