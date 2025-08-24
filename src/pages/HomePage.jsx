@@ -55,7 +55,7 @@ export default function HomePage() {
                   ))}
                 </ul>
               ) : (
-                <p style={{ fontStyle: 'italic', color: '#666' }}>
+                <p>
                   No tasks yet. <Link to="/task">Add your first task!</Link>
                 </p>
               )}
