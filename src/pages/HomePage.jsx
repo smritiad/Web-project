@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router"; 
-import { useSelector } from "react-redux";
 import Timer from "../assets/Timer.png";
 import Affirmation from "../assets/Affirmation.png";
+import Header from "../components/Header";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addTask } from "../redux/taskSlice.js";
+import { Form, Button } from "react-bootstrap";
 
 export default function HomePage() {
-  
-  const tasks = useSelector((state) => state.tasks.tasks);
+  const [task, setTask] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const cardStyle = {
     backgroundColor: '#EBF8DF',
@@ -15,8 +21,18 @@ export default function HomePage() {
     boxShadow: '0 4px 12px rgba(10, 92, 75, 0.2)', 
     borderRadius: '12px'
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (task.trim()) {
+      dispatch(addTask(task.trim()));
+      setTask("");
+      navigate("/home");
+    }
+  };
 
   return (
+    <>
+    <Header />
     <Container className="mt-5">
       <Link to="/">
         <button style={{
@@ -35,32 +51,28 @@ export default function HomePage() {
 
       <Row className="mb-4 align-items-stretch">
         <Col md={6}>
-          <Card style={cardStyle} className="h-100">
-            <Card.Body>
-              <Card.Title>Tasks To Do</Card.Title>
-              <Card.Text>Plan Your Day!!</Card.Text>
-              {tasks.length > 0 ? (
-                <ul>
-                  {tasks.map(task => (
-                    <li 
-                      key={task.id}
-                      style={{
-                        textDecoration: task.completed ? 'line-through' : 'none',
-                        opacity: task.completed ? 0.6 : 1,
-                        color: task.completed ? '#666' : 'inherit'
-                      }}
-                    >
-                      {task.text}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>
-                  No tasks yet. <Link to="/task">Add your first task!</Link>
-                </p>
-              )}
-            </Card.Body>
-          </Card>
+        <Card style={cardStyle}>
+        <Card.Body>
+          <Card.Title className="mb-3 text-center">Add a Task</Card.Title>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="taskInput">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Enter your task"
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                style={{ resize: "vertical", minHeight: "80px" }}
+              />
+            </Form.Group>
+            <div className="d-flex justify-content-center">
+              <Button variant="primary" type="submit" className="mt-3">
+                Add Task
+              </Button>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
         </Col>
 
         <Col md={6} className="d-flex flex-column gap-4">
@@ -101,5 +113,6 @@ export default function HomePage() {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }

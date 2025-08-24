@@ -54,8 +54,7 @@ const Header = () => {
             <Nav.Link>
               <button 
                 style={toggleButtonStyle} 
-                onClick={() => dispatch(toggleTheme())}
-              >
+                onClick={() => dispatch(toggleTheme())}>
                 {theme ? 'Light' : 'Dark'}
               </button>
             </Nav.Link>

@@ -16,11 +16,13 @@ createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+        <Route path="home" element={<HomePage />} />
+        <Route path="timer" element={<TimerPage />} />
+        <Route path="task" element={<TaskPage />} />
           <Route path="/" element={<App />}>
-            <Route index element={<HomePage />} />
+         
+            {/* <Route index element={<HomePage />} /> */}
             <Route path="home" element={<HomePage />} />
-            <Route path="timer" element={<TimerPage />} />
-            <Route path="task" element={<TaskPage />} />
             <Route path="signup" element={<SignupPage />} />
           </Route>
         </Routes>

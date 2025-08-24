@@ -1,58 +1,61 @@
-import React, { useState } from "react";
-import { Container, Form, Button, Card } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { addTask } from "../redux/taskSlice.js";
+import React from "react";
+import { Container, Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import Header from "../components/Header";
+import { Link } from "react-router"; 
 
 function TasksPage() {
-  const [task, setTask] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.tasks); 
 
   const cardStyle = {
-    backgroundColor: '#EBF8DF',
-    boxShadow: '0 4px 12px rgba(10, 92, 75, 0.2)', 
-    borderRadius: '12px',
-    padding: '20px',
-    maxWidth: '600px',
-    width: '100%',
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (task.trim()) {
-      // Dispatch the task to Redux store
-      dispatch(addTask(task.trim()));
-      setTask("");
-      navigate("/home");
-    }
+    backgroundColor: "#EBF8DF",
+    boxShadow: "0 4px 12px rgba(10, 92, 75, 0.2)",
+    borderRadius: "12px",
+    padding: "20px",
+    maxWidth: "600px",
+    width: "100%",
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-      <Card style={cardStyle}>
-        <Card.Body>
-          <Card.Title className="mb-3 text-center">Add a Task</Card.Title>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="taskInput">
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Enter your task"
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-                style={{ resize: "vertical", minHeight: "80px" }}
-              />
-            </Form.Group>
-            <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit" className="mt-3">
-                Add Task
-              </Button>
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+    <>
+      <Header />
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "100vh" }}
+      >
+        <Card style={cardStyle}>
+          <Card.Body>
+            <Card.Title>Tasks To Do</Card.Title>
+            <Card.Text className="mb-4"></Card.Text>
+
+            {tasks.length > 0 ? (
+              <ul style={{ paddingLeft: "1rem" }}>
+                {tasks.map((task) => (
+                  <li
+                    key={task.id}
+                    style={{
+                      textDecoration: task.completed ? "line-through" : "none",
+                      opacity: task.completed ? 0.6 : 1,
+                      color: task.completed ? "#666" : "#0A5C4B",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {task.text}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-muted text-center">
+                No tasks yet.{" "}
+                <Link to="/task" style={{ color: "#0A5C4B", fontWeight: "500" }}>
+                  Add your first task!
+                </Link>
+              </p>
+            )}
+          </Card.Body>
+        </Card>
+      </Container>
+    </>
   );
 }
 
