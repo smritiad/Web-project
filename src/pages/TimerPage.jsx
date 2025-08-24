@@ -3,16 +3,7 @@ import Header from "../components/Header";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-function CartPage() {
-  const cardStyle = {
-    backgroundColor: "#EBF8DF",
-    marginTop: "50px",
-    boxShadow: "0 4px 12px rgba(10, 92, 75, 0.2)",
-    borderRadius: "12px",
-    textAlign: "center",
-    padding: "20px"
-  };
-
+function TimerPage() {
   const [minutes, setMinutes] = useState(0);
 
   useEffect(() => {
@@ -26,60 +17,63 @@ function CartPage() {
     localStorage.setItem("timer_minutes", minutes);
   }, [minutes]);
 
-  const incrementMinutes = () => {
-    setMinutes((prev) => prev + 1);
+  const incrementMinutes = () => setMinutes((prev) => prev + 1);
+  const decrementMinutes = () => setMinutes((prev) => Math.max(0, prev - 1));
+
+  const timerStyle = {
+    width: "200px",
+    height: "200px",
+    borderRadius: "50%",
+    backgroundColor: "#0A5C4B",
+    color: "white",
+    fontSize: "48px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "40px auto",
+    boxShadow: "0 0 20px rgba(10, 92, 75, 0.4)",
   };
 
-  const decrementMinutes = () => {
-    setMinutes((prev) => Math.max(0, prev - 1));
+  const controlButtonStyle = {
+    width: "60px",
+    height: "60px",
+    borderRadius: "50%",
+    fontSize: "24px",
+    border: "none",
+    color: "white",
+    cursor: "pointer",
   };
 
   return (
     <>
       <Header />
-      <Container className="mt-5">
+      <Container className="text-center mt-5">
         <Link to="/">
-          <button
-            style={{
-              backgroundColor: "#0A5C4B",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "16px",
-              transition: "background-color 0.3s ease"
-            }}
-          >
-            Go Back
-          </button>
+          <Button variant="dark" className="mb-4">Go Back</Button>
         </Link>
 
-        <Row className="justify-content-center">
-          <Col md={6}>
-            <Card style={cardStyle}>
-              <Card.Body>
-                <Card.Title>Timer</Card.Title>
-                <Card.Text style={{ fontSize: "24px", marginBottom: "20px" }}>
-                  {minutes} minute{minutes !== 1 ? "s" : ""}
-                </Card.Text>
-                <div className="d-flex justify-content-center gap-3">
-                  <Button
-                    variant="danger"
-                    onClick={decrementMinutes}
-                    disabled={minutes === 0}
-                  >
-                    −
-                    </Button>
-                    <Button variant="success" onClick={incrementMinutes}> +  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <div style={timerStyle}>
+          {minutes}m
+        </div>
+
+        <div className="d-flex justify-content-center gap-4">
+          <button
+            style={{ ...controlButtonStyle, backgroundColor: "#dc3545" }}
+            onClick={decrementMinutes}
+            disabled={minutes === 0}
+          >
+            −
+          </button>
+          <button
+            style={{ ...controlButtonStyle, backgroundColor: "#28a745" }}
+            onClick={incrementMinutes}
+          >
+            +
+          </button>
+        </div>
       </Container>
     </>
   );
 }
 
-export default CartPage;
+export default TimerPage;

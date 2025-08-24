@@ -11,7 +11,7 @@ import App from "./App.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import { Provider } from "react-redux";
-import store from "./store.js";
+import store from "./redux/store.js";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
