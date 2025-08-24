@@ -3,23 +3,32 @@ import { IoLogoGameControllerB } from "react-icons/io";
 import { IoTimerOutline } from "react-icons/io5";
 import { FaHome, FaTasks } from "react-icons/fa";
 import { Link } from "react-router"; 
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/store.js";
 import logo from "../assets/alarm.png";
-import { useSelector } from "react-redux";
-
-
-
-const navbarStyle = {
-  backgroundColor: '#0A5C4B',
-};
-
-const linkStyle = {
-  color: 'white',
-  textDecoration: 'none',
-};
 
 const Header = () => {
-  const hasTasks = useSelector((state) => state.tasks.hasTasks);
-  
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.isDark);
+
+  const navbarStyle = {
+    backgroundColor: theme ? '#1a1a1a' : '#0A5C4B',
+  };
+
+  const linkStyle = {
+    color: 'white',
+    textDecoration: 'none',
+  };
+
+  const toggleButtonStyle = {
+    background: 'none',
+    border: '1px solid white',
+    color: 'white',
+    padding: '5px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  };
+
   return (
     <Navbar variant="dark" expand="lg" collapseOnSelect style={navbarStyle}>
       <Container>
@@ -37,20 +46,18 @@ const Header = () => {
               <IoTimerOutline /> Timer
             </Nav.Link>
             <Nav.Link as={Link} to="/task" style={linkStyle}>
-              <FaTasks />Task {hasTasks && (<span
-      style={{
-        display: "inline-block",
-        width: "8px",
-        height: "8px",
-        backgroundColor: "red",
-        borderRadius: "50%",
-        marginLeft: "6px",
-      }}
-    />
-  )}
-</Nav.Link>
+              <FaTasks /> Task
+            </Nav.Link>
             <Nav.Link as={Link} to="/game" style={linkStyle}>
               <IoLogoGameControllerB /> Game
+            </Nav.Link>
+            <Nav.Link>
+              <button 
+                style={toggleButtonStyle} 
+                onClick={() => dispatch(toggleTheme())}
+              >
+                {theme ? 'Light' : 'Dark'}
+              </button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

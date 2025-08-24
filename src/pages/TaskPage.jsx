@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router";
-
 import { useDispatch } from "react-redux";
-import { setHasTasks } from "../redux/taskSlice";
-import Header from "../components/Header";
+import { addTask } from "../redux/taskSlice.js";
 
 function TasksPage() {
   const [task, setTask] = useState("");
@@ -20,24 +18,17 @@ function TasksPage() {
     width: '100%',
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (task.trim()) {
-      await fetch("http://localhost:3001/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: task }),
-      });
+      // Dispatch the task to Redux store
+      dispatch(addTask(task.trim()));
       setTask("");
-      dispatch(setHasTasks(true)); 
       navigate("/home");
     }
   };
 
-
   return (
-    <div>
-      <Header />
     <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
       <Card style={cardStyle}>
         <Card.Body>
@@ -62,10 +53,7 @@ function TasksPage() {
         </Card.Body>
       </Card>
     </Container>
-    </div>
   );
 }
 
 export default TasksPage;
-
-

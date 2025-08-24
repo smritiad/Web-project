@@ -1,21 +1,13 @@
 import { Outlet } from "react-router";
 import Header from "./components/Header";
-import Animate from "./components/Animation";
-import GetStartedButton from "./components/Button";
-
-
 
 function App() {
   return (
-    <>
-   
+    <div className="App">
       <Header />
-      <Animate />
-      <GetStartedButton />
       <Outlet />
-    </>
+    </div>
   );
 }
 
 export default App;
-

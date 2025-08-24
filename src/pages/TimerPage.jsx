@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import Header from "../components/Header";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
@@ -46,7 +45,7 @@ function TimerPage() {
 
   return (
     <>
-      <Header />
+      
       <Container className="text-center mt-5">
         <Link to="/">
           <Button variant="dark" className="mb-4">Go Back</Button>

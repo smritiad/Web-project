@@ -1,8 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  BrowserRouter, Routes, Route
-} from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router";
 import TaskPage from "./pages/TaskPage.jsx";
 import TimerPage from "./pages/TimerPage.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,16 +12,19 @@ import { Provider } from "react-redux";
 import store from "./redux/store.js";
 
 createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/timer" element={<TimerPage />} />
-        <Route path="/task" element={<TaskPage />} />
-        <Route path="/" element={<App />}>
-          <Route path="/signup" element={<SignupPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </Provider>
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<HomePage />} />
+            <Route path="home" element={<HomePage />} />
+            <Route path="timer" element={<TimerPage />} />
+            <Route path="task" element={<TaskPage />} />
+            <Route path="signup" element={<SignupPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>
 );
